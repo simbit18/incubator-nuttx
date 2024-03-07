@@ -263,27 +263,29 @@ xtensa_esp32s3_gcc_toolchain() {
 setup_links() {
   # Configure ccache
   mkdir -p "${NUTTXTOOLS}"/ccache/bin/
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/arm-none-eabi-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/arm-none-eabi-g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/avr-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/avr-g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/cc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/c++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/clang
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/clang++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/p32-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv64-unknown-elf-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv64-unknown-elf-g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-g++
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
-  cp "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
+  export MSYS=winsymlinks:lnk
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/arm-none-eabi-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/arm-none-eabi-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/avr-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/avr-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/cc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/c++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/clang
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/clang++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/p32-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv64-unknown-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv64-unknown-elf-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
+
 }
 
 install_build_tools() {
