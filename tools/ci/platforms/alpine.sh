@@ -91,6 +91,9 @@ bloaty() {
 }
 
 c_cache() {
+  add_path "${NUTTXTOOLS}"/ccache/bin
+  # export CCACHE_DIR=${NUTTXTOOLS}/ccache/bin
+  # echo "export CCACHE_DIR=${NUTTXTOOLS}/ccache/bin" >> "${NUTTXTOOLS}"/env.sh
   if ! type ccache > /dev/null 2>&1; then
     apk --no-cache --update add ccache
   fi
