@@ -82,12 +82,11 @@ arm64_gcc_toolchain() {
 
 c_cache() {
   add_path "${NUTTXTOOLS}"/ccache/bin
-  # export CCACHE_DIR=${NUTTXTOOLS}/ccache/bin
-  # echo "export CCACHE_DIR=${NUTTXTOOLS}/ccache/bin" >> "${NUTTXTOOLS}"/env.sh
   if ! type ccache > /dev/null 2>&1; then
     pacman -S --noconfirm --needed ccache
   fi
   setup_links
+
   command ccache --version
 }
 
@@ -103,6 +102,7 @@ esp_tool() {
     mv esptool-win64 esp-tool
     rm ${basefile}.zip
   fi
+
   command esptool version
 }
 
@@ -167,6 +167,7 @@ riscv_gcc_toolchain() {
     mv xpack-riscv-none-elf-gcc-13.2.0-2 riscv-none-elf-gcc
     rm ${basefile}.zip
   fi
+
   command riscv-none-elf-gcc --version
 }
 
