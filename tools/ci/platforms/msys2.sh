@@ -264,7 +264,7 @@ setup_links() {
   # Configure ccache
   mkdir -p "${NUTTXTOOLS}"/ccache/bin/
   export MSYS=winsymlinks:lnk
-  
+  echo "export MSYS=winsymlinks:lnk" >> "${NUTTXTOOLS}"/env.sh
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-gcc
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-g++
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/arm-none-eabi-gcc
