@@ -263,8 +263,8 @@ xtensa_esp32s3_gcc_toolchain() {
 setup_links() {
   # Configure ccache
   mkdir -p "${NUTTXTOOLS}"/ccache/bin/
-  export MSYS=winsymlinks:nativestrict
-  echo "${PATH}"
+  export MSYS=winsymlinks:lnk
+  
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-gcc
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/aarch64-none-elf-g++
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/arm-none-eabi-gcc
@@ -286,11 +286,7 @@ setup_links() {
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-g++
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
-
-  export MSYS=
-  echo "${PATH}"
-  ls "${NUTTXTOOLS}"/ccache/bin/
-  ls "${NUTTXTOOLS}"/ccache/
+  ls -l "${NUTTXTOOLS}"/ccache/bin
 }
 
 install_build_tools() {
