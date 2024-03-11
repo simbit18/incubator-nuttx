@@ -90,19 +90,20 @@ function arm64-gcc-toolchain {
 
 function avr-gcc-toolchain {
   if ! type avr-gcc &> /dev/null; then
-    sudo apt-get install -y binutils-avr gcc-avr avr-libc 
+    # avr-gcc-c++ 
+    dnf -y install avr-binutils avr-gcc avr-libc
   fi
 
   command avr-gcc --version
 }
 
-function binutils {
-  if ! type objcopy &> /dev/null; then
-    sudo apt-get install -y binutils-dev
-  fi
+# function binutils {
+  # if ! type objcopy &> /dev/null; then
+    # sudo apt-get install -y binutils-dev
+  # fi
 
-  command objcopy --version
-}
+  # command objcopy --version
+# }
 
 function bloaty {
   add_path "${tools}"/bloaty/bin
@@ -124,7 +125,7 @@ function bloaty {
 
 function c-cache {
   if ! type ccache &> /dev/null; then
-    sudo apt-get install -y ccache
+    dnf -y install ccache
   fi
   setup_links
   command ccache --version
@@ -132,32 +133,32 @@ function c-cache {
 
 function clang-tidy {
   if ! type clang-tidy &> /dev/null; then
-    sudo apt-get install -y clang clang-tidy
+    dnf -y install clang-tools-extra
   fi
 
   command clang-tidy --version
 }
 
-function util-linux {
-  if ! type flock &> /dev/null; then
-    sudo apt-get install -y util-linux
-  fi
+# function util-linux {
+  # if ! type flock &> /dev/null; then
+    # sudo apt-get install -y util-linux
+  # fi
 
-  command flock --version
-}
+  # command flock --version
+# }
 
-function gen-romfs {
-  if ! type genromfs &> /dev/null; then
-    sudo apt-get install -y genromfs
-  fi
-}
+# function gen-romfs {
+  # if ! type genromfs &> /dev/null; then
+    # sudo apt-get install -y genromfs
+  # fi
+# }
 
-function gperf {
- if ! type gperf &> /dev/null; then
-    sudo apt-get install -y gperf
-  fi
+# function gperf {
+ # if ! type gperf &> /dev/null; then
+    # sudo apt-get install -y gperf
+  # fi
 
-}
+# }
 
 function kconfig-frontends {
   add_path "${tools}"/kconfig-frontends/bin
@@ -231,8 +232,19 @@ function riscv-gcc-toolchain {
 }
 
 function rust {
-  if ! type rustc &> /dev/null; then
-    sudo sudo apt-get install rustc
+  add_path "${NUTTXTOOLS}"/rust/cargo/bin
+  # Configuring the PATH environment variable
+  export CARGO_HOME=${NUTTXTOOLS}/rust/cargo
+  export RUSTUP_HOME=${NUTTXTOOLS}/rust/rustup
+  echo "export CARGO_HOME=${NUTTXTOOLS}/rust/cargo" >> "${NUTTXTOOLS}"/env.sh
+  echo "export RUSTUP_HOME=${NUTTXTOOLS}/rust/rustup" >> "${NUTTXTOOLS}"/env.sh
+  if ! type rustc > /dev/null 2>&1; then
+    # Install Rust target x86_64-unknown-linux-musl
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y
+    # Install targets supported from NuttX
+    "$CARGO_HOME"/bin/rustup target add thumbv6m-none-eabi
+    "$CARGO_HOME"/bin/rustup target add thumbv7m-none-eabi
+    
   fi
 
   command rustc --version
@@ -366,11 +378,11 @@ function xtensa-esp32s3-gcc-toolchain {
   command xtensa-esp32s3-elf-gcc --version
 }
 
-function u-boot-tools {
-  if ! type mkimage &> /dev/null; then
-    sudo apt-get install -y u-boot-tools
-  fi
-}
+# function u-boot-tools {
+  # if ! type mkimage &> /dev/null; then
+    # sudo apt-get install -y u-boot-tools
+  # fi
+# }
 
 function wasi-sdk {
   add_path "${tools}"/wamrc
@@ -438,7 +450,7 @@ function install_build_tools {
   mkdir -p "${tools}"
   echo "#!/usr/bin/env bash" > "${tools}"/env.sh
 
-  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain binutils bloaty clang-tidy gen-romfs gperf kconfig-frontends mips-gcc-toolchain python-tools riscv-gcc-toolchain rust rx-gcc-toolchain sparc-gcc-toolchain xtensa-esp32-gcc-toolchain u-boot-tools util-linux wasi-sdk c-cache"
+  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain python-tools riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain wasi-sdk c-cache"
 
   pushd .
   for func in ${install}; do
