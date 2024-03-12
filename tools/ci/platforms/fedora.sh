@@ -452,8 +452,8 @@ function install_build_tools {
   done
   popd
 
-  dnf clean all
-  rm -rf /var/cache/dnf
+  # dnf clean all
+  # rm -rf /var/cache/dnf
   # echo "#!/usr/bin/env bash" > "${tools}"/env.sh
   echo "PATH=${PATH}" >> "${tools}"/env.sh
   echo "export PATH" >> "${tools}"/env.sh
