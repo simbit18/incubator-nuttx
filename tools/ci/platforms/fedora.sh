@@ -122,7 +122,7 @@ function bloaty {
     # ls -a "${tools}"/bloaty
   # fi
 
-  command bloaty --help
+  # command bloaty --help
 }
 
 function c-cache {
