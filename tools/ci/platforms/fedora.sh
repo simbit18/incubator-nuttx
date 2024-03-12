@@ -106,19 +106,21 @@ function avr-gcc-toolchain {
 # }
 
 function bloaty {
-  add_path "${tools}"/bloaty/bin
-
-  if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
-    git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${tools}"/bloaty-src
-    mkdir -p "${tools}"/bloaty
-    cd "${tools}"/bloaty-src
-    cmake -B build -DCMAKE_INSTALL_PREFIX="${tools}"/bloaty
-    cmake --build build
-    cmake --build build --target install
-    cd "${tools}"
-    rm -rf bloaty-src
-    ls -a "${tools}"/bloaty
+  if ! type bloaty &> /dev/null; then
+    dnf -y install bloaty
   fi
+
+  # if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
+    # git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${tools}"/bloaty-src
+    # mkdir -p "${tools}"/bloaty
+    # cd "${tools}"/bloaty-src
+    # cmake -B build -DCMAKE_INSTALL_PREFIX="${tools}"/bloaty
+    # cmake --build build
+    # cmake --build build --target install
+    # cd "${tools}"
+    # rm -rf bloaty-src
+    # ls -a "${tools}"/bloaty
+  # fi
 
   command bloaty --version
 }
