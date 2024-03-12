@@ -127,6 +127,7 @@ function bloaty {
 }
 
 function c-cache {
+  add_path "${NUTTXTOOLS}"/ccache/bin
   if ! type ccache &> /dev/null; then
     dnf -y install ccache
   fi
