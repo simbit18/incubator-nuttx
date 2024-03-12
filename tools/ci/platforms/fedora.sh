@@ -106,23 +106,24 @@ function avr-gcc-toolchain {
 # }
 
 function bloaty {
-  if ! type bloaty &> /dev/null; then
-    dnf -y install bloaty
+# todo
+  # if ! type bloaty &> /dev/null; then
+    # dnf -y install bloaty
+  # fi
+  add_path "${NUTTXTOOLS}"/bloaty/bin
+  if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
+    git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${tools}"/bloaty-src
+    mkdir -p "${tools}"/bloaty
+    cd "${tools}"/bloaty-src
+    cmake -B build -DCMAKE_INSTALL_PREFIX="${tools}"/bloaty
+    cmake --build build
+    cmake --build build --target install
+    cd "${tools}"
+    rm -rf bloaty-src
+    ls -a "${tools}"/bloaty
   fi
 
-  # if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
-    # git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${tools}"/bloaty-src
-    # mkdir -p "${tools}"/bloaty
-    # cd "${tools}"/bloaty-src
-    # cmake -B build -DCMAKE_INSTALL_PREFIX="${tools}"/bloaty
-    # cmake --build build
-    # cmake --build build --target install
-    # cd "${tools}"
-    # rm -rf bloaty-src
-    # ls -a "${tools}"/bloaty
-  # fi
-
-  # command bloaty --help
+  command bloaty --help
 }
 
 function c-cache {
@@ -134,11 +135,11 @@ function c-cache {
 }
 
 function clang-tidy {
-  if ! type clang-tidy &> /dev/null; then
-    dnf -y install clang-tools-extra
+  if ! type clang &> /dev/null; then
+    dnf -y install clang clang-tools-extra
   fi
 
-  command clang-tidy --version
+  command clang --version
 }
 
 # function util-linux {

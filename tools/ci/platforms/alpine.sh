@@ -79,7 +79,7 @@ bloaty() {
     git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
     mkdir -p "${NUTTXTOOLS}"/bloaty
     cd "${NUTTXTOOLS}"/bloaty-src
-    cmake -B build -DCMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty -G Ninja
+    cmake -B build -DCMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty
     cmake --build build
     cmake --build build --target install
     cd "${NUTTXTOOLS}"
@@ -357,7 +357,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain bloaty gen_romfs kconfig_frontends rust c_cache"
 
   oldpath=$(cd . && pwd -P)
   echo "${oldpath}"
