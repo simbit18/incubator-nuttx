@@ -444,7 +444,7 @@ function install_build_tools {
   mkdir -p "${tools}"
   echo "#!/usr/bin/env bash" > "${tools}"/env.sh
 
-  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain wasi_sdk c-cache"
+  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain wasi-sdk c-cache"
 
   pushd .
   for func in ${install}; do
@@ -452,8 +452,9 @@ function install_build_tools {
   done
   popd
 
-  # dnf clean all
-  # rm -rf /var/cache/dnf
+  dnf clean all
+  rm -rf /var/cache/dnf
+
   # echo "#!/usr/bin/env bash" > "${tools}"/env.sh
   echo "PATH=${PATH}" >> "${tools}"/env.sh
   echo "export PATH" >> "${tools}"/env.sh
