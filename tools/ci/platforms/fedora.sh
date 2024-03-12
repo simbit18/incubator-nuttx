@@ -199,14 +199,14 @@ function mips-gcc-toolchain {
   command p32-gcc --version
 }
 
-function python-tools {
+# function python-tools {
 
-  pip3 install \
-    cxxfilt \
-    esptool \
-    imgtool \
-    kconfiglib
-}
+  # pip3 install \
+    # cxxfilt \
+    # esptool \
+    # imgtool \
+    # kconfiglib
+# }
 
 function riscv-gcc-toolchain {
   add_path "${tools}"/riscv-none-elf-gcc/bin
@@ -443,7 +443,7 @@ function install_build_tools {
   mkdir -p "${tools}"
   echo "#!/usr/bin/env bash" > "${tools}"/env.sh
 
-  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain python-tools riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain wasi-sdk c-cache"
+  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain c-cache"
 
   pushd .
   for func in ${install}; do
