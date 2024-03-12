@@ -444,7 +444,7 @@ function install_build_tools {
   mkdir -p "${tools}"
   echo "#!/usr/bin/env bash" > "${tools}"/env.sh
 
-  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain c-cache"
+  install="arm-clang-toolchain arm-gcc-toolchain arm64-gcc-toolchain avr-gcc-toolchain bloaty clang-tidy kconfig-frontends mips-gcc-toolchain riscv-gcc-toolchain rust sparc-gcc-toolchain xtensa-esp32-gcc-toolchain wasi_sdk c-cache"
 
   pushd .
   for func in ${install}; do
