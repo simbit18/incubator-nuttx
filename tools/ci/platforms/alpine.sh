@@ -76,7 +76,7 @@ bloaty() {
   add_path "${NUTTXTOOLS}"/bloaty/bin
 
   if [ ! -f "${NUTTXTOOLS}/bloaty/bin/bloaty" ]; then
-    git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
+    git clone https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
     mkdir -p "${NUTTXTOOLS}"/bloaty
     cd "${NUTTXTOOLS}"/bloaty-src
     cmake -B build -DCMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty

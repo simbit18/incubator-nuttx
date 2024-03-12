@@ -112,7 +112,7 @@ function bloaty {
   # fi
   add_path "${NUTTXTOOLS}"/bloaty/bin
   if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
-    git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${tools}"/bloaty-src
+    git clone https://github.com/google/bloaty "${tools}"/bloaty-src
     mkdir -p "${tools}"/bloaty
     cd "${tools}"/bloaty-src
     cmake -B build -DCMAKE_INSTALL_PREFIX="${tools}"/bloaty
