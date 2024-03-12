@@ -123,7 +123,7 @@ function bloaty {
     ls -a "${tools}"/bloaty
   fi
 
-  command bloaty --help
+  command bloaty --version
 }
 
 function c-cache {
@@ -202,20 +202,10 @@ function mips-gcc-toolchain {
 function python-tools {
 
   pip3 install \
-    cmake-format \
-    CodeChecker \
-    cvt2utf \
     cxxfilt \
     esptool \
     imgtool \
-    kconfiglib \
-    pexpect==4.8.0 \
-    pyelftools \
-    pyserial==3.5 \
-    pytest==6.2.5 \
-    pytest-json==0.4.0 \
-    pytest-ordering==0.6 \
-    pytest-repeat==0.9.1
+    kconfiglib
 }
 
 function riscv-gcc-toolchain {
