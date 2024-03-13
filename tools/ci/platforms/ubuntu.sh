@@ -119,6 +119,7 @@ bloaty() {
 }
 
 c_cache() {
+  add_path "${NUTTXTOOLS}"/ccache/bin
   if ! type ccache > /dev/null 2>&1; then
     sudo apt-get install -y ccache
   fi
@@ -229,12 +230,19 @@ riscv_gcc_toolchain() {
 }
 
 rust() {
+  add_path "${NUTTXTOOLS}"/rust/cargo/bin
+  # Configuring the PATH environment variable
+  export CARGO_HOME=${NUTTXTOOLS}/rust/cargo
+  export RUSTUP_HOME=${NUTTXTOOLS}/rust/rustup
+  echo "export CARGO_HOME=${NUTTXTOOLS}/rust/cargo" >> "${NUTTXTOOLS}"/env.sh
+  echo "export RUSTUP_HOME=${NUTTXTOOLS}/rust/rustup" >> "${NUTTXTOOLS}"/env.sh
   if ! type rustc > /dev/null 2>&1; then
-    sudo apt-get install rustc
+    # Install Rust target x86_64-unknown-linux-musl
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y
     # Install targets supported from NuttX
-    rustup target add thumbv6m-none-eabi
-    rustup target add thumbv7m-none-eabi
-    rustup target add riscv64gc-unknown-none-elf
+    "$CARGO_HOME"/bin/rustup target add thumbv6m-none-eabi
+    "$CARGO_HOME"/bin/rustup target add thumbv7m-none-eabi
+    "$CARGO_HOME"/bin/rustup target add riscv64gc-unknown-none-elf
   fi
 
   command rustc --version
