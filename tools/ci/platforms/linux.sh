@@ -174,6 +174,24 @@ riscv_gcc_toolchain() {
   command riscv-none-elf-gcc --version
 }
 
+rust() {
+  add_path "${NUTTXTOOLS}"/rust/cargo/bin
+  # Configuring the PATH environment variable
+  export CARGO_HOME=${NUTTXTOOLS}/rust/cargo
+  export RUSTUP_HOME=${NUTTXTOOLS}/rust/rustup
+  echo "export CARGO_HOME=${NUTTXTOOLS}/rust/cargo" >> "${NUTTXTOOLS}"/env.sh
+  echo "export RUSTUP_HOME=${NUTTXTOOLS}/rust/rustup" >> "${NUTTXTOOLS}"/env.sh
+  if ! type rustc > /dev/null 2>&1; then
+    # Install Rust target stable-x86_64-unknown-linux-gnu
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y
+    # Install targets supported from NuttX
+    "$CARGO_HOME"/bin/rustup target add thumbv6m-none-eabi
+    "$CARGO_HOME"/bin/rustup target add thumbv7m-none-eabi
+  fi
+
+  command rustc --version
+}
+
 rx_gcc_toolchain() {
   add_path "${NUTTXTOOLS}"/renesas-toolchain/rx-elf-gcc/bin
 
@@ -368,7 +386,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain bloaty kconfig_frontends mips_gcc_toolchain python_tools riscv_gcc_toolchain rx_gcc_toolchain sparc_gcc_toolchain xtensa_esp32_gcc_toolchain xtensa_esp32s2_gcc_toolchain xtensa_esp32s3_gcc_toolchain util_linux wasi_sdk"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain bloaty kconfig_frontends mips_gcc_toolchain python_tools riscv_gcc_toolchain rust rx_gcc_toolchain sparc_gcc_toolchain xtensa_esp32_gcc_toolchain wasi_sdk"
 
   oldpath=$(cd . && pwd -P)
   for func in ${install}; do
