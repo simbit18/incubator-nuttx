@@ -291,7 +291,14 @@ rust() {
   # fi
 # }
 
-# function wasi-sdk {
+wasi_sdk() {
+# todo
+# https://github.com/bytecodealliance/wasm-micro-runtime/blob/main/product-mini/README.md#linux
+  if ! type "${WASI_SDK_PATH}"/bin/clang > /dev/null 2>&1; then
+    apk --no-cache --update add wasi-sdk
+  fi
+
+   
   # add_path "${NUTTXTOOLS}"/wamrc
 
   # if [ ! -f "${NUTTXTOOLS}/wasi-sdk/bin/clang" ]; then
@@ -318,9 +325,9 @@ rust() {
   # export WASI_SDK_PATH="${NUTTXTOOLS}/wasi-sdk"
   # echo "export WASI_SDK_PATH=${NUTTXTOOLS}/wasi-sdk" >> "${NUTTXTOOLS}"/env.sh
 
-  # command "${WASI_SDK_PATH}"/bin/clang --version
+  command "${WASI_SDK_PATH}"/bin/clang --version
   # command wamrc --version
-# }
+}
 
 setup_links() {
   # Configure ccache
@@ -357,7 +364,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain bloaty gen_romfs kconfig_frontends rust c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain bloaty gen_romfs kconfig_frontends rust wasi_sdk c_cache"
 
   oldpath=$(cd . && pwd -P)
   echo "${oldpath}"
