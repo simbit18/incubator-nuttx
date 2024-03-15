@@ -19,7 +19,7 @@
 #
 ############################################################################
 
-# Fedora
+# Rocky
 
 set -e
 set -o xtrace
@@ -82,14 +82,15 @@ arm64_gcc_toolchain() {
   command aarch64-none-elf-gcc --version
 }
 
-avr_gcc_toolchain() {
-  if ! type avr-gcc > /dev/null 2>&1; then
-    # avr-gcc-c++ 
-    dnf -y install avr-binutils avr-gcc avr-libc
-  fi
+# todo
+# avr_gcc_toolchain() {
+  # if ! type avr-gcc > /dev/null 2>&1; then
+    # # avr-gcc-c++ 
+    # dnf -y install avr-binutils avr-gcc avr-libc
+  # fi
 
-  command avr-gcc --version
-}
+  # command avr-gcc --version
+# }
 
 # binutils() {
   # if ! type objcopy > /dev/null 2>&1; then
@@ -446,7 +447,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain bloaty clang_tidy kconfig_frontends mips_gcc_toolchain riscv_gcc_toolchain rust sparc_gcc_toolchain xtensa_esp32_gcc_toolchain wasi_sdk c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain bloaty clang_tidy kconfig_frontends mips_gcc_toolchain riscv_gcc_toolchain rust sparc_gcc_toolchain xtensa_esp32_gcc_toolchain wasi_sdk c_cache"
 
   oldpath=$(cd . && pwd -P)
   for func in ${install}; do
