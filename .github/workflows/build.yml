@@ -298,6 +298,7 @@ jobs:
             zip
             tio
             zlib-devel
+            u-boot-tools
             cmake
             ninja
             python-pip 
