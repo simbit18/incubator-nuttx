@@ -447,7 +447,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain bloaty clang_tidy kconfig_frontends mips_gcc_toolchain riscv_gcc_toolchain rust sparc_gcc_toolchain xtensa_esp32_gcc_toolchain wasi_sdk c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain bloaty clang_tidy kconfig_frontends mips_gcc_toolchain riscv_gcc_toolchain rust sparc_gcc_toolchain xtensa_esp32_gcc_toolchain wasi_sdk"
 
   oldpath=$(cd . && pwd -P)
   for func in ${install}; do
