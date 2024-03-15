@@ -85,6 +85,9 @@ function install_tools {
     msys2)
       "${CIPLAT}"/msys2.sh
       ;;
+    rocky)
+      "${CIPLAT}"/rocky.sh
+      ;;
     ubuntu)
       "${CIPLAT}"/ubuntu.sh
       ;;
