@@ -628,13 +628,14 @@ endef
 # Example: $(call CLONE,$(URL_BASE),$(PATH),$(STORAGE_FOLDER))
 
 define CLONE
-	$(ECHO_BEGIN)"Clone: $(if $3,$3,$2) "
+	$(ECHO_BEGIN)"Clone to: $(if $3,$3,$2) "
 	if [ -z $3 ]; then \
 		git clone --quiet $1 $2; \
 	else \
 		if [ ! -d $3 ]; then \
 			git clone --quiet $1 $3; \
 		fi; \
+		echo "Copy the repository to $2";
 		cp -fr $3 $2; \
 	fi
 	$(ECHO_END)
