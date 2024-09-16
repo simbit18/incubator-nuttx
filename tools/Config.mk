@@ -628,17 +628,16 @@ endef
 # Example: $(call CLONE,$(URL_BASE),$(PATH),$(STORAGE_FOLDER))
 
 define CLONE
-	$(ECHO_BEGIN)"Clone to: $(if $3,$3,$2) "
+	echo "Clone to: $(if $3,$3,$2) "
 	if [ -z $3 ]; then \
 		git clone --quiet $1 $2; \
 	else \
 		if [ ! -d $3 ]; then \
 			git clone --quiet $1 $3; \
 		fi; \
-		echo "Copy the repository to $2"; \
+		echo "Copy the repository from $3 to $2"; \
 		cp -fr $3 $2; \
 	fi
-	$(ECHO_END)
 endef
 
 # CHECK_COMMITSHA - Check if the branch contains the commit SHA-1.
@@ -648,14 +647,13 @@ endef
 # Example: $(call CHECK_COMMITSHA,$(GIT_FOLDER),$(COMMIT_SHA-1))
 
 define CHECK_COMMITSHA
-	$(ECHO_BEGIN)"COMMIT SHA-1: $2 "
+	echo "Check commit SHA-1: $2 "
 	if [ -d $1 ]; then \
 		if ! git -C $1 branch --contains $2 > /dev/null 2>&1; then \
 			echo "Commit is not present removed folder $1 "; \
 			rm -rf $1; \
 		fi \
 	fi
-	$(ECHO_END)
 endef
 
 # CLEAN - Default clean target
