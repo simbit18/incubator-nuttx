@@ -234,7 +234,7 @@ rust() {
   # command sparc-gaisler-elf-gcc --version
 # }
 
-function xtensa-esp32-gcc-toolchain {
+function xtensa_esp32_gcc_toolchain {
   if ! type xtensa-esp32-elf-gcc > /dev/null 2>&1; then
       apk --no-cache --update add gcc-xtensa-esp32-elf
   fi
@@ -242,7 +242,7 @@ function xtensa-esp32-gcc-toolchain {
   xtensa-esp32-elf-gcc --version
 }
 
-# function xtensa-esp32s2-gcc-toolchain {
+# function xtensa_esp32s2_gcc_toolchain {
   # add_path "${NUTTXTOOLS}"/xtensa-esp32s2-elf/bin
 
   # if [ ! -f "${NUTTXTOOLS}/xtensa-esp32s2-elf/bin/xtensa-esp32s2-elf-gcc" ]; then
@@ -259,7 +259,7 @@ function xtensa-esp32-gcc-toolchain {
   # command xtensa-esp32s2-elf-gcc --version
 # }
 
-# function xtensa-esp32s3-gcc-toolchain {
+# function xtensa_esp32s3_gcc_toolchain {
   # add_path "${NUTTXTOOLS}"/xtensa-esp32s3-elf/bin
 
   # if [ ! -f "${NUTTXTOOLS}/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-gcc" ]; then
@@ -355,7 +355,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust xtensa-esp32-gcc-toolchain c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust xtensa_esp32_gcc_toolchain c_cache"
 
   oldpath=$(cd . && pwd -P)
   echo "${oldpath}"
