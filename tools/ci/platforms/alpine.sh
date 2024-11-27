@@ -234,22 +234,13 @@ rust() {
   # command sparc-gaisler-elf-gcc --version
 # }
 
-# function xtensa-esp32-gcc-toolchain {
-  # add_path "${NUTTXTOOLS}"/xtensa-esp32-elf/bin
+function xtensa-esp32-gcc-toolchain {
+  if ! type xtensa-esp32-elf-gcc > /dev/null 2>&1; then
+      apk --no-cache --update add gcc-xtensa-esp32-elf
+  fi
 
-  # if [ ! -f "${NUTTXTOOLS}/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc" ]; then
-    # local basefile
-    # basefile=xtensa-esp32-elf-12.2.0_20230208-x86_64-linux-gnu
-    # cd "${NUTTXTOOLS}"
-    # # Download the latest ESP32 GCC toolchain prebuilt by Espressif
-    # wget --quiet https://github.com/espressif/crosstool-NG/releases/download/esp-12.2.0_20230208/${basefile}.tar.xz
-    # xz -d ${basefile}.tar.xz
-    # tar xf ${basefile}.tar
-    # rm ${basefile}.tar
-  # fi
-
-  # command xtensa-esp32-elf-gcc --version
-# }
+  xtensa-esp32-elf-gcc --version
+}
 
 # function xtensa-esp32s2-gcc-toolchain {
   # add_path "${NUTTXTOOLS}"/xtensa-esp32s2-elf/bin
@@ -352,8 +343,8 @@ setup_links() {
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-g++
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-gcc
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-g++
-#  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
-#  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32s2-elf-gcc
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32s2-elf-g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32s3-elf-gcc
@@ -364,7 +355,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust xtensa-esp32-gcc-toolchain c_cache"
 
   oldpath=$(cd . && pwd -P)
   echo "${oldpath}"
