@@ -175,27 +175,14 @@ kconfig_frontends() {
   # command p32-gcc --version
 # }
 
-# function riscv-gcc-toolchain {
-  # add_path "${NUTTXTOOLS}"/riscv-none-elf-gcc/bin
+function riscv_gcc_toolchain {
 
-  # if [ ! -f "${NUTTXTOOLS}/riscv-none-elf-gcc/bin/riscv-none-elf-gcc" ]; then
-    # ## Add glibc-to-musl compatibility, because xPack GCC was compiled for glibc
-    # ## From https://github.com/sgerrand/alpine-pkg-glibc
-    # wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-    # wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk
-    # apk add glibc-2.35-r1.apk
+  if ! type riscv-none-elf-gcc > /dev/null 2>&1; then
+    apk --no-cache --update add gcc-riscv-none-elf
+  fi
 
-    # local basefile
-    # basefile=xpack-riscv-none-elf-gcc-13.2.0-2-linux-x64
-    # cd "${NUTTXTOOLS}"
-    # # Download the latest RISCV GCC toolchain prebuilt by xPack
-    # wget --quiet https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v13.2.0-2/${basefile}.tar.gz
-    # tar zxf ${basefile}.tar.gz
-    # mv xpack-riscv-none-elf-gcc-13.2.0-2 riscv-none-elf-gcc
-    # rm ${basefile}.tar.gz
-  # fi
-  # command riscv-none-elf-gcc --version
-# }
+  riscv-none-elf-gcc --version
+}
 
 rust() {
   add_path "${NUTTXTOOLS}"/rust/cargo/bin
@@ -234,13 +221,13 @@ rust() {
   # command sparc-gaisler-elf-gcc --version
 # }
 
-function xtensa_esp32_gcc_toolchain {
-  if ! type xtensa-esp32-elf-gcc > /dev/null 2>&1; then
-      apk --no-cache --update add gcc-xtensa-esp32-elf
-  fi
+# function xtensa_esp32_gcc_toolchain {
+  # if ! type xtensa-esp32-elf-gcc > /dev/null 2>&1; then
+      # apk --no-cache --update add gcc-xtensa-esp32-elf
+  # fi
 
-  xtensa-esp32-elf-gcc --version
-}
+  # xtensa-esp32-elf-gcc --version
+# }
 
 # function xtensa_esp32s2_gcc_toolchain {
   # add_path "${NUTTXTOOLS}"/xtensa-esp32s2-elf/bin
@@ -337,14 +324,14 @@ setup_links() {
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/p32-gcc
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/rx-elf-gcc
-#  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-gcc
-#  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-g++
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-gcc
+  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-gcc
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-g++
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-gcc
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-g++
-  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
-  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
+# ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-gcc
+# ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32-elf-g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32s2-elf-gcc
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32s2-elf-g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/xtensa-esp32s3-elf-gcc
@@ -355,7 +342,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust xtensa_esp32_gcc_toolchain c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust riscv_gcc_toolchain c_cache"
 
   oldpath=$(cd . && pwd -P)
   echo "${oldpath}"
