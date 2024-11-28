@@ -324,8 +324,8 @@ setup_links() {
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/p32-gcc
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/rx-elf-gcc
-  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-gcc
-  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-g++
+#  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-gcc
+#  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/riscv-none-elf-g++
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-gcc
 #  ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/sparc-gaisler-elf-g++
   ln -sf "$(which ccache)" "${NUTTXTOOLS}"/ccache/bin/x86_64-elf-gcc
@@ -342,7 +342,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust riscv_gcc_toolchain c_cache"
+  install="arm_clang_toolchain arm_gcc_toolchain arm64_gcc_toolchain avr_gcc_toolchain gen_romfs kconfig_frontends rust c_cache"
 
   oldpath=$(cd . && pwd -P)
   echo "${oldpath}"
