@@ -509,6 +509,14 @@ function dotest {
   config=`echo $1 | cut -d',' -f1`
   check=${HOST},${config/\//:}
 
+  echo "Configuration/Tool: $1"
+  echo $(date '+%Y-%m-%d %H:%M:%S')
+
+  if [ ${PRINTLISTONLY} -eq 1 ]; then
+    echo "===================================================================================="
+    return
+  fi
+
   skip=0
   for re in $blacklist; do
     if [[ "${check}" =~ ${re:1}$ ]]; then
@@ -516,6 +524,7 @@ function dotest {
       skip=1
     fi
   done
+
 
   unset cmake
   if [ ${NINJACMAKE} -eq 1 ]; then
@@ -527,53 +536,50 @@ function dotest {
     done
   fi
 
-  echo "Configuration/Tool: $1"
-  if [ ${PRINTLISTONLY} -eq 1 ]; then
-    return
-  fi
-
-  # Parse the next line
-
-  configdir=`echo $config | cut -s -d':' -f2`
-  if [ -z "${configdir}" ]; then
-    configdir=`echo $config | cut -s -d'/' -f2`
-    if [ -z "${configdir}" ]; then
-      echo "ERROR: Malformed configuration: ${config}"
-      showusage
-    else
-      boarddir=`echo $config | cut -d'/' -f1`
-    fi
-  else
-    boarddir=`echo $config | cut -d':' -f1`
-  fi
-
-  path=$nuttx/boards/*/*/$boarddir/configs/$configdir
-  if [ ! -r $path/defconfig ]; then
-    echo "ERROR: no configuration found at $path"
-    showusage
-  fi
-
-  unset toolchain
-  unset original_toolchain
-  if [ "X$config" != "X$1" ]; then
-    toolchain=`echo $1 | cut -d',' -f2`
-    if [ -z "$toolchain" ]; then
-      echo "  Warning: no tool configuration"
-    fi
-  fi
-
-  # Perform the build test
-  echo $(date '+%Y-%m-%d %H:%M:%S')
-  echo "------------------------------------------------------------------------------------"
-  distclean
   if [ ${skip} -ne 1 ]; then
-    configure
-    build
-    run
-    refresh
-  else
-    echo "  Skipping: $1"
-  fi
+
+    # Parse the next line
+
+    configdir=`echo $config | cut -s -d':' -f2`
+    if [ -z "${configdir}" ]; then
+      configdir=`echo $config | cut -s -d'/' -f2`
+      if [ -z "${configdir}" ]; then
+        echo "ERROR: Malformed configuration: ${config}"
+        showusage
+      else
+        boarddir=`echo $config | cut -d'/' -f1`
+      fi
+    else
+      boarddir=`echo $config | cut -d':' -f1`
+    fi
+
+    path=$nuttx/boards/*/*/$boarddir/configs/$configdir
+    if [ ! -r $path/defconfig ]; then
+      echo "ERROR: no configuration found at $path"
+      showusage
+    fi
+
+    unset toolchain
+    unset original_toolchain
+    if [ "X$config" != "X$1" ]; then
+      toolchain=`echo $1 | cut -d',' -f2`
+      if [ -z "$toolchain" ]; then
+        echo "  Warning: no tool configuration"
+      fi
+    fi
+
+    # Perform the build test
+    echo "------------------------------------------------------------------------------------"
+    distclean
+    if [ ${skip} -ne 1 ]; then
+      configure
+      build
+      run
+      refresh
+    else
+      echo "  Skipping: $1"
+    fi
+   fi
 }
 
 # Perform the build test for each entry in the test list file
