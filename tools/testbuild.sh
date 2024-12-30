@@ -526,17 +526,16 @@ function dotest {
   done
 
 
-  unset cmake
-  if [ ${NINJACMAKE} -eq 1 ]; then
-    for l in $cmakelist; do
-      if [[ "${config/\//:}" == "${l}" ]]; then
-        echo "Cmake in present: $1"
-        cmake=1
-      fi
-    done
-  fi
-
   if [ ${skip} -ne 1 ]; then
+    unset cmake
+    if [ ${NINJACMAKE} -eq 1 ]; then
+      for l in $cmakelist; do
+        if [[ "${config/\//:}" == "${l}" ]]; then
+          echo "Cmake in present: $1"
+          cmake=1
+        fi
+      done
+    fi
 
     # Parse the next line
 
@@ -571,14 +570,12 @@ function dotest {
     # Perform the build test
     echo "------------------------------------------------------------------------------------"
     distclean
-    if [ ${skip} -ne 1 ]; then
-      configure
-      build
-      run
-      refresh
-    else
-      echo "  Skipping: $1"
-    fi
+    configure
+    build
+    run
+    refresh
+  else
+    echo "  Skipping: $1"
    fi
 }
 
