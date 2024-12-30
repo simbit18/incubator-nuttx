@@ -574,8 +574,6 @@ function dotest {
     build
     run
     refresh
-  else
-    echo "  Skipping: $1"
    fi
 }
 
