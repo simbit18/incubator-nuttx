@@ -164,9 +164,11 @@ for ( $i = 0; $i -lt $args.count; $i++ ) {
         '-c' {
             enable_ccache
             continue
+        }
         '-s' {
             setup_repos
             continue
+        }
         { $_ -like '-*' } {
             Write-Host "3 -*" -ForegroundColor Green
             $options += "$($args[$i]) " #$args[0]
