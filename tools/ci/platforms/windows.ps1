@@ -51,8 +51,6 @@ Write-Host "arm_gcc_toolchain !!!"
             Expand-Archive "$NUTTXTOOLS\$basefile.zip" # -DestinationPath  "$basefile"
             Move-Item -Path "$basefile\$basefile" -Destination "gcc-arm-none-eabi"
             Remove-Item "$basefile*" -Force
-            arm-none-eabi-gcc --version
-            Write-Host "File downloaded successfully to $destination"
         }
         arm-none-eabi-gcc --version
     } catch {
@@ -97,8 +95,6 @@ Write-Host "riscv_gcc_toolchain !!!"
           Expand-Archive "$NUTTXTOOLS\$basefile.zip" # -DestinationPath  "$basefile"
           Move-Item -Path "$basefile\xpack-riscv-none-elf-gcc-13.2.0-2" -Destination "riscv-none-elf-gcc"
           Remove-Item "$basefile*" -Force
-          riscv-none-elf-gcc --version
-          Write-Host "File downloaded successfully to $destination"
       }
       riscv-none-elf-gcc --version
   } catch {
